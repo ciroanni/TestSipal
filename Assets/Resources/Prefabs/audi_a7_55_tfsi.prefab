@@ -2529,6 +2529,10 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5481151367446051860}
+  - component: {fileID: 3174514436261849315}
+  - component: {fileID: 6304808523673672183}
+  - component: {fileID: 3934491441701056275}
+  - component: {fileID: 4483085119656268619}
   m_Layer: 0
   m_Name: audi_a7_55_tfsi
   m_TagString: Spawnable
@@ -2581,6 +2585,87 @@ Transform:
   - {fileID: 3429442685405071597}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!65 &3174514436261849315
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8628338215106849281}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 2.1386647, y: 1.0938094, z: 6.7511034}
+  m_Center: {x: 0.03878236, y: 0.31316364, z: 0.036365986}
+--- !u!54 &6304808523673672183
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8628338215106849281}
+  serializedVersion: 5
+  m_Mass: 1
+  m_LinearDamping: 0
+  m_AngularDamping: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 0
+  m_IsKinematic: 1
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
+--- !u!114 &3934491441701056275
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8628338215106849281}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a37a461df6e307b458585fed8b958dfc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  arRaycastManager: {fileID: 0}
+  arCamera: {fileID: 0}
+  moveSpeed: 2
+  rotationSpeed: 100
+  scaleSpeed: 0.5
+  minScale: 0.1
+  maxScale: 5
+  touchDistance: 20
+  currentMode: 3
+--- !u!114 &4483085119656268619
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8628338215106849281}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1192be078f3f9614a9ca52f1aae7dc38, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &9020431919654473456
 GameObject:
   m_ObjectHideFlags: 0
