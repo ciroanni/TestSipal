@@ -2,9 +2,11 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.XR.ARFoundation;
+
 public class SpawnableManager : MonoBehaviour
 {
     [SerializeField] ARRaycastManager arRaycastManager;
+    [SerializeField] ARPlaneManager arPlaneManager; // Add reference to ARPlaneManager
     List<ARRaycastHit> hits = new List<ARRaycastHit>();
     [SerializeField] GameObject spawnablePrefab;
 
@@ -23,10 +25,15 @@ public class SpawnableManager : MonoBehaviour
 
     // Public property to access the spawned object
     public GameObject GetSpawnedObject() { return spawnedObject; }
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
         arCamera = Camera.main;
+        
+        // Auto-find ARPlaneManager if not assigned
+        if (arPlaneManager == null)
+            arPlaneManager = FindFirstObjectByType<ARPlaneManager>();
     }
 
     // Update is called once per frame
@@ -134,6 +141,10 @@ public class SpawnableManager : MonoBehaviour
                 {
                     button.SetTouchManipulator(spawnedObject.GetComponent<TouchManipulator>());
                 }
+                
+                // Hide planes after spawning object
+                HideDetectedPlanes();
+                
                 Debug.Log("Object spawned successfully!");
             }
         }
@@ -147,6 +158,51 @@ public class SpawnableManager : MonoBehaviour
             Destroy(spawnedObject);
             spawnedObject = null;
             tapCount = 0; // Reset tap count
+            
+            // Show planes again after deleting object
+            ShowDetectedPlanes();
+        }
+    }
+
+    void HideDetectedPlanes()
+    {
+        if (arPlaneManager != null)
+        {
+            Debug.Log("Hiding detected planes");
+            
+            // Hide all existing planes
+            foreach (var plane in arPlaneManager.trackables)
+            {
+                plane.gameObject.SetActive(false);
+            }
+            
+            // Disable plane detection to prevent new planes from appearing
+            arPlaneManager.enabled = false;
+        }
+        else
+        {
+            Debug.LogWarning("ARPlaneManager not found! Cannot hide planes.");
+        }
+    }
+
+    void ShowDetectedPlanes()
+    {
+        if (arPlaneManager != null)
+        {
+            Debug.Log("Showing detected planes");
+            
+            // Re-enable plane detection
+            arPlaneManager.enabled = true;
+            
+            // Show all existing planes
+            foreach (var plane in arPlaneManager.trackables)
+            {
+                plane.gameObject.SetActive(true);
+            }
+        }
+        else
+        {
+            Debug.LogWarning("ARPlaneManager not found! Cannot show planes.");
         }
     }
 
@@ -160,5 +216,16 @@ public class SpawnableManager : MonoBehaviour
     public bool HasSpawnedObject()
     {
         return spawnedObject != null;
+    }
+
+    // Public methods to manually control plane visibility (for UI buttons if needed)
+    public void ManuallyHidePlanes()
+    {
+        HideDetectedPlanes();
+    }
+
+    public void ManuallyShowPlanes()
+    {
+        ShowDetectedPlanes();
     }
 }

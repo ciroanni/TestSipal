@@ -2649,9 +2649,9 @@ MonoBehaviour:
   arRaycastManager: {fileID: 0}
   arCamera: {fileID: 0}
   moveSpeed: 2
-  rotationSpeed: 100
-  scaleSpeed: 0.5
-  minScale: 0.1
+  rotationSpeed: 60
+  scaleSpeed: 0.2
+  minScale: 0.01
   maxScale: 5
   touchDistance: 20
   currentMode: 3

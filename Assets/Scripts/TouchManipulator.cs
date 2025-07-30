@@ -12,7 +12,7 @@ public class TouchManipulator : MonoBehaviour
     [SerializeField] private float moveSpeed = 2f;
     [SerializeField] private float rotationSpeed = 100f;
     [SerializeField] private float scaleSpeed = 0.5f;
-    [SerializeField] private float minScale = 0.1f;
+    [SerializeField] private float minScale = 0.01f;
     [SerializeField] private float maxScale = 5f;
 
     [Header("Touch Detection")]
