@@ -10,11 +10,13 @@ public class ARTouchTooltip : MonoBehaviour
     public SimpleTooltipStyle simpleTooltipStyle;
     [TextArea] public string infoLeft = "Hello";
     [TextArea] public string infoRight = "";
-    
+
     [Header("AR Touch Settings")]
     [SerializeField] private Camera arCamera;
     [SerializeField] private float touchDistance = 10f; // Maximum distance for touch detection
-    
+    private Vector3 tooltipOffset = Vector3.up * 0.1f; // Offset from object position
+    [SerializeField] private bool followObject = true; // Whether tooltip should follow object position
+
     private STController tooltipController;
     private EventSystem eventSystem;
     private bool isShowing = false;
@@ -22,14 +24,15 @@ public class ARTouchTooltip : MonoBehaviour
 
     private void Awake()
     {
-        eventSystem = FindObjectOfType<EventSystem>();
-        tooltipController = FindObjectOfType<STController>();
+        eventSystem = FindFirstObjectByType<EventSystem>();
+        tooltipController = FindFirstObjectByType<STController>();
 
         // Add a new tooltip prefab if one does not exist yet
         if (!tooltipController)
         {
             tooltipController = AddTooltipPrefabToScene();
         }
+
         if (!tooltipController)
         {
             Debug.LogWarning("Could not find the Tooltip prefab");
@@ -51,6 +54,12 @@ public class ARTouchTooltip : MonoBehaviour
     private void Update()
     {
         HandleTouchInput();
+        
+        // Update tooltip position if it's showing and should follow the object
+        if (isShowing && followObject && tooltipController != null)
+        {
+            UpdateTooltipPosition();
+        }
     }
 
     private void HandleTouchInput()
@@ -69,7 +78,7 @@ public class ARTouchTooltip : MonoBehaviour
         {
             CheckTouchOnObject(Input.mousePosition);
         }
-        
+
         // Alternative: Always check mouse input for debugging (uncomment if needed)
         // This allows mouse input even when touch is available
         /*
@@ -106,25 +115,25 @@ public class ARTouchTooltip : MonoBehaviour
         if (Physics.Raycast(ray, out hit, touchDistance))
         {
             Debug.Log($"Hit object: {hit.collider.gameObject.name} at distance: {hit.distance}");
-            
+
             if (hit.collider.gameObject == gameObject)
             {
                 Debug.Log($"Hit target object: {gameObject.name}");
                 ToggleTooltip();
             }
-            else
+            else if(hit.collider.gameObject.GetComponent<ARTouchTooltip>() != null)
             {
                 Debug.Log($"Hit different object, hiding tooltip");
                 // If we hit something else, hide the tooltip
                 HideTooltip();
             }
         }
-        else
-        {
-            Debug.Log("No hit detected, hiding tooltip");
-            // If we didn't hit anything, hide the tooltip
-            HideTooltip();
-        }
+        // else
+        // {
+        //     Debug.Log("No hit detected, hiding tooltip");
+        //     // If we didn't hit anything, hide the tooltip
+        //     HideTooltip();
+        // }
     }
 
     public static STController AddTooltipPrefabToScene()
@@ -154,6 +163,9 @@ public class ARTouchTooltip : MonoBehaviour
         tooltipController.SetCustomStyledText(infoLeft, simpleTooltipStyle, STController.TextAlign.Left);
         tooltipController.SetCustomStyledText(infoRight, simpleTooltipStyle, STController.TextAlign.Right);
 
+        // Position the tooltip at the object's world position
+        UpdateTooltipPosition();
+
         // Then tell the controller to show it
         tooltipController.ShowTooltip();
 
@@ -166,7 +178,7 @@ public class ARTouchTooltip : MonoBehaviour
 
         isShowing = false;
         tooltipController.HideTooltip();
-
+        
         Debug.Log($"Hiding tooltip for: {gameObject.name}");
     }
 
@@ -191,13 +203,52 @@ public class ARTouchTooltip : MonoBehaviour
     {
         infoLeft = newInfoLeft;
         infoRight = newInfoRight;
-        
+
         // If currently showing, update the display
         if (isShowing)
         {
             tooltipController.SetCustomStyledText(infoLeft, simpleTooltipStyle, STController.TextAlign.Left);
             tooltipController.SetCustomStyledText(infoRight, simpleTooltipStyle, STController.TextAlign.Right);
         }
+    }
+
+    private void UpdateTooltipPosition()
+    {
+        if (tooltipController == null) return;
+
+        // Calculate the world position for the tooltip
+        Vector3 worldPosition = transform.position + tooltipOffset;
+
+        // Set the tooltip position in world space
+        Transform tooltipTransform = tooltipController.transform;
+        tooltipTransform.position = worldPosition;
+
+        // Optional: Make tooltip face the camera
+        if (arCamera != null)
+        {
+            Vector3 directionToCamera = arCamera.transform.position - worldPosition;
+            directionToCamera.y = 0; // Keep tooltip upright
+            if (directionToCamera != Vector3.zero)
+            {
+                tooltipTransform.rotation = Quaternion.LookRotation(-directionToCamera);
+            }
+        }
+    }
+
+    // Public method to set custom tooltip offset
+    public void SetTooltipOffset(Vector3 offset)
+    {
+        tooltipOffset = offset;
+        if (isShowing)
+        {
+            UpdateTooltipPosition();
+        }
+    }
+
+    // Public method to enable/disable tooltip following
+    public void SetFollowObject(bool follow)
+    {
+        followObject = follow;
     }
 
     private void Reset()
@@ -225,7 +276,7 @@ public class ARTouchTooltip : MonoBehaviour
         // Draw a sphere to visualize the touch detection range
         Gizmos.color = Color.yellow;
         Gizmos.DrawWireSphere(transform.position, 0.1f);
-        
+
         // Draw a line to show the maximum touch distance
         if (arCamera != null)
         {

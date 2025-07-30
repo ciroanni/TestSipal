@@ -38,7 +38,7 @@ public class TouchManipulator : MonoBehaviour
     }
 
     [Header("Current Mode")]
-    [SerializeField] private ManipulationMode currentMode = ManipulationMode.Auto;
+    [SerializeField] public ManipulationMode currentMode = ManipulationMode.Auto;
 
     void Start()
     {
