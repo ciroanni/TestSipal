@@ -44,7 +44,7 @@ These act as **interactive hotspots**:
 
 A floating UI lets you interact with the placed object in real-time:
 
-* Three buttons allow:
+* Three buttons allow (along the detected AR plane):
 
   * **Translate**
   * **Rotate**
@@ -176,7 +176,7 @@ Queste agiscono come **punti interattivi**:
 
 Un'interfaccia fluttuante consente di interagire in tempo reale con l'oggetto posizionato:
 
-* Tre pulsanti permettono di:
+* Tre pulsanti permettono di (rispetto al piano individuato):
 
   * **Traslare**
   * **Ruotare**
