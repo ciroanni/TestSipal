@@ -122,3 +122,135 @@ This Unity project demonstrates:
 
 This is a prototype project for a technical test. Feel free to fork, suggest features, or open pull requests to extend functionality!
 
+---
+
+---
+
+# 🇮🇹 VERSIONE ITALIANA
+
+# 🧠 App di Interazione AR con Tooltip
+
+Un'app AR interattiva sviluppata con Unity, progettata per riconoscere superfici orizzontali e posizionare/manipolare un modello 3D con tooltip contestuali.
+
+---
+
+## 📲 Come Usare l'App
+
+### ✅ Requisiti
+
+* **Versione di Unity**: 6000.1.9f1 o compatibile
+* **Piattaforma**: iOS / Android (dispositivo compatibile con AR)
+* **Pacchetti Necessari**:
+
+  * AR Foundation
+  * ARCore XR Plugin (Android)
+  * ARKit XR Plugin (iOS)
+  * XR Plugin Management
+
+---
+
+### 🚀 Avvio dell'App
+
+1. Apri l'app su un dispositivo mobile compatibile con AR.
+2. Muovi il telefono nell’ambiente per permettere il rilevamento delle superfici orizzontali.
+3. Una volta rilevato un piano:
+
+   * **Tocca una volta** sul piano per **posizionare il modello 3D**.
+   * **Tocca due volte** sul modello per **rimuoverlo**.
+
+---
+
+### 🔴 Interazione con Tooltip
+
+Il modello 3D contiene sfere rosse posizionate in aree specifiche.
+Queste agiscono come **punti interattivi**:
+
+* **Tocca una sfera rossa** per visualizzare **informazioni contestuali** tramite un tooltip in AR.
+* Il tooltip appare nello spazio tridimensionale e segue la direzione della fotocamera.
+
+📦 Puoi scaricare il modello 3D usato nell'app [qui](https://www.turbosquid.com/it/3d-models/3d-model-audi-a7-sportback-2018-55-tfsi-2430054).
+
+---
+
+### ✋ Manipolazione dell'Oggetto
+
+Un'interfaccia fluttuante consente di interagire in tempo reale con l'oggetto posizionato:
+
+* Tre pulsanti permettono di:
+
+  * **Traslare**
+  * **Ruotare**
+  * **Scalare**
+
+* Un interruttore in alto a destra attiva la **modalità di auto-rilevamento**:
+
+  * In questa modalità, puoi usare **gesture a due dita** per passare automaticamente tra traslazione, rotazione e scala in base al tipo di gesto.
+
+---
+
+## 🧪 Panoramica del Progetto (per Sviluppatori)
+
+Questo progetto Unity dimostra:
+
+* Rilevamento di piani e interazione tramite AR Foundation
+* Visualizzazione di tooltip usando il sistema [Simple Tooltip](https://assetstore.unity.com/packages/tools/gui/simple-tooltip-system-147860)
+* UI per la manipolazione dell’oggetto con alternativa basata su gesture
+* Gestione dinamica dei tooltip sui sottocomponenti del modello (tramite sfere rosse)
+
+### 💡 Suggerimenti per Miglioramenti Futuri
+
+* Supportare il posizionamento di più modelli
+* Permettere il caricamento di modelli personalizzati a runtime
+* Implementare il rilevamento e l’interazione con piani verticali
+* Migliorare la UX con animazioni o effetti sonori alla comparsa dei tooltip
+* Salvare lo stato di trasformazione del modello tra le sessioni
+
+---
+
+## 🧩 Componenti Chiave
+
+* **ARTouchTooltip.cs**
+  Rileva l'input dell'utente e gestisce la visibilità dei tooltip sugli oggetti.
+
+* **Integrazione Simple Tooltip**
+  Gestisce la visualizzazione e il posizionamento dei tooltip nello spazio AR.
+
+* **ObjectManipulator.cs**
+  Gestisce le trasformazioni (traslazione/rotazione/scalatura) del modello posizionato.
+
+* **ARPlacementManager.cs**
+  Gestisce il rilevamento dei piani e l’istanziazione/rimozione degli oggetti.
+
+---
+
+## 🐛 Suggerimenti per la Risoluzione dei Problemi
+
+**Il modello non viene posizionato?**
+
+* Assicurati che l’ambiente sia ben illuminato e presenti superfici orizzontali visibili.
+
+**I tooltip non appaiono?**
+
+* Verifica che le sfere rosse siano correttamente etichettate e abbiano dei collider.
+* Assicurati che il prefab SimpleTooltip si trovi nella cartella `Resources`.
+
+**La manipolazione dell’oggetto non funziona?**
+
+* Prova a passare dalla modalità UI manuale alla modalità gesture.
+* Verifica che la sessione AR sia stabile e che il tracciamento funzioni correttamente.
+
+---
+
+## 📄 Licenza e Crediti
+
+* **Simple Tooltip Assets**: [CC0 by Kenney](Assets/Simple%20Tooltip/Assets/Sprites/license.txt)
+* **Font**: [SIL Open Font License](Assets/Simple%20Tooltip/Assets/Font/OFL.txt)
+* **Modello 3D**: [Licenza Standard](https://blog.turbosquid.com/turbosquid-3d-model-license/)
+
+---
+
+## 🤝 Contributi
+
+Questo è un progetto prototipale per un test tecnico. Sentiti libero di fare fork, proporre funzionalità o aprire pull request per estendere le funzionalità!
+
+---
